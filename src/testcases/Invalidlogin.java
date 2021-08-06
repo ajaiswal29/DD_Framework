@@ -18,11 +18,6 @@ public class Invalidlogin extends BaseTest  {
 		
 		Thread.sleep(5000);
 		
-		
-		
-		
-		
-		
 		//boolean isloginpagedisplayed = driver.findElement(By.xpath(objectrepo.getProperty("invalidlogin"))).isDisplayed();
 		
 		//whatever result (true or false) came in this, then accordingly will pass or fail.

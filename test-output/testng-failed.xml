@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite guice-stage="DEVELOPMENT" name="Failed suite [Default suite]">
-  <test thread-count="5" name="Default test(failed)">
+<suite guice-stage="DEVELOPMENT" name="Failed suite [Suite]" parallel="tests">
+  <test thread-count="5" name="LoginTestCase(failed)" parallel="tests">
+    <parameter name="browser" value="chrome"/>
     <classes>
       <class name="testcases.LoginTestCase">
         <methods>
@@ -11,5 +12,17 @@
         </methods>
       </class> <!-- testcases.LoginTestCase -->
     </classes>
-  </test> <!-- Default test(failed) -->
-</suite> <!-- Failed suite [Default suite] -->
+  </test> <!-- LoginTestCase(failed) -->
+  <test thread-count="5" name="LoginTestCase 1(failed)" parallel="tests">
+    <parameter name="browser" value="edge"/>
+    <classes>
+      <class name="testcases.LoginTestCase">
+        <methods>
+          <include name="Appclose"/>
+          <include name="wordpress"/>
+          <include name="init"/>
+        </methods>
+      </class> <!-- testcases.LoginTestCase -->
+    </classes>
+  </test> <!-- LoginTestCase 1(failed) -->
+</suite> <!-- Failed suite [Suite] -->

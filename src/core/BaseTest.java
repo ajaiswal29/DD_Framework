@@ -11,6 +11,7 @@ import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.testng.annotations.AfterMethod;
@@ -22,6 +23,7 @@ import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
 import util.Excelconfig;
 import util.Helper;
 
@@ -35,21 +37,20 @@ public class BaseTest {
 	static public Excelconfig exceldata;
 	public ExtentReports report;
 	public ExtentTest logger;
-	
-	
+
 	@BeforeMethod
-	
-	//for parallel testing
-	/*@Parameters("browser")
-	public void init(String Browservalue) throws IOException {*/
-	
+
+	// for parallel testing
+	@Parameters("browser")
+	// public void init(String Browservalue) throws IOException {
+
 	public void init() throws IOException {
-		
-		//select path of current working directory
+
+		// select path of current working directory
 		String Userpath = System.getProperty("user.dir");
-		
-		//Read data from excel
-		exceldata = new Excelconfig(Userpath+"\\Data\\Testdata.xlsx");
+
+		// Read data from excel
+		exceldata = new Excelconfig(Userpath + "\\Data\\Testdata.xlsx");
 
 		config = new Properties();
 		objectrepo = new Properties();
@@ -59,36 +60,54 @@ public class BaseTest {
 
 		config.load(fis);
 		objectrepo.load(Locator);
-		
-		//Extent Reporting
-		ExtentHtmlReporter extent = new ExtentHtmlReporter(Userpath+"\\Reports\\Login"+Helper.getCurrentDateTime()+".html");
+
+		// Extent Reporting
+		ExtentHtmlReporter extent = new ExtentHtmlReporter(
+				Userpath + "\\Reports\\Login" + Helper.getCurrentDateTime() + ".html");
 		report = new ExtentReports();
 		report.attachReporter(extent);
-		
 
 		// Read from config.properties file
 		String Browservalue = config.getProperty("Browser");
-		
-				
+
 		if (Browservalue.equalsIgnoreCase("chrome")) {
-			System.setProperty("webdriver.chrome.driver", Userpath + "\\Driver\\chromedriver.exe");
+			WebDriverManager.chromedriver().setup();
 			driver = new ChromeDriver();
-			
+			/*
+			 * System.setProperty("webdriver.chrome.driver", Userpath +
+			 * "\\Driver\\chromedriver.exe"); driver = new ChromeDriver();
+			 */
+
 		} else if (Browservalue.equalsIgnoreCase("firefox")) {
-			System.setProperty("webdriver.gecko.driver", Userpath + "\\Driver\\geckodriver.exe");
+			WebDriverManager.firefoxdriver().setup();
 			driver = new FirefoxDriver();
-			
+			/*
+			 * System.setProperty("webdriver.gecko.driver", Userpath +
+			 * "\\Driver\\geckodriver.exe"); driver = new FirefoxDriver();
+			 */
+
 		} else if (Browservalue.equalsIgnoreCase("ie")) {
-			System.setProperty("webdriver.ie.driver", Userpath + "\\Driver\\IEDriverServer.exe");
+			WebDriverManager.iedriver().setup();
 			driver = new InternetExplorerDriver();
-			
+			/*
+			 * System.setProperty("webdriver.ie.driver", Userpath +
+			 * "\\Driver\\IEDriverServer.exe"); driver = new InternetExplorerDriver();
+			 */
+
+		} else if (Browservalue.equalsIgnoreCase("edge")) {
+			WebDriverManager.edgedriver().setup();
+			driver = new EdgeDriver();
+
+			/*
+			 * System.setProperty("webdriver.edge.driver", Userpath +
+			 * "\\Driver\\msedgedriver.exe"); driver = new EdgeDriver();
+			 */
 		}
-		
+
 		String URL = config.getProperty("url");
 		driver.manage().window().maximize();
-		
+
 		driver.get(URL);
-		
 
 	}
 

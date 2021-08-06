@@ -7,13 +7,13 @@
     <classes>
       <class name="testcases.LoginTestCase"/>
       </classes>
-  </test> <!-- LoginTestCase -->
+  </test> <!--LoginTestCase -->
   
- <!--  <test  name="LoginTestCase 1">
-  <parameter name = "browser" value = "IE"></parameter>
+  <test  name="LoginTestCase 1">
+  <parameter name = "browser" value = "edge"></parameter>
     <classes>
       <class name="testcases.LoginTestCase"/>
     </classes>
-  </test> LoginTestCase
-   -->
+  </test> <!--LoginTestCase -->
+  
 </suite> <!-- Suite -->
